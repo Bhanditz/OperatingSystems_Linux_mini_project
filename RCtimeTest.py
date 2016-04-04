@@ -16,3 +16,4 @@ def RCtime(RCpin):
 
 while True:
 	print RCtime(4)
+	time.sleep(1)
