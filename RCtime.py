@@ -2,6 +2,12 @@ import RPi.GPIO as GPIO, time
 
 GPIO.setmode(GPIO.BCM)
  
+ # Raspberry pi 2
+ # 3.3V
+ # Ground
+ # GPIO RCpin
+ 
+ 
 def RCtime (RCpin):
 	reading = 0
 	GPIO.setup(RCpin, GPIO.OUT)
