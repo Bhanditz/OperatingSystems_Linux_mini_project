@@ -1,0 +1,4 @@
+import subprocess
+p subprocess.Popen("./ kaku 18 C on",cwd=/home/<	 )
+p.wait()
+#call("sudo ./kaku 18 C on");
