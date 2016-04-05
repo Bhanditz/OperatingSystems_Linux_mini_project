@@ -17,10 +17,11 @@ import cz.msebera.android.httpclient.Header;
 public class ApiHelper {
 
     private static ApiHelper apiHelper = null;
+    public final static String TAG = "OSLinux";
 
     private String baseURL = "http://145.48.227.148:8081/";
     private String ipAdress,port;
-    public String get = "",
+    public final String get = "",
                    add = "add",
                    getAll = "getKakus";
 
@@ -41,7 +42,8 @@ public class ApiHelper {
     public void setBaseURL(String ipAdress, String port){
         this.ipAdress = ipAdress;
         this.port = port;
-        baseURL = "http://" + ipAdress + ":" + port;
+        baseURL = "http://" + ipAdress + ":" + port + "/";
+        Log.d(TAG,baseURL);
     }
 
     public String getIpAdress() {
