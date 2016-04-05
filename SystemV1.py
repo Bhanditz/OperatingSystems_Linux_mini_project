@@ -16,9 +16,9 @@ def RCtime(RCpin):
 	GPIO.output(RCpin,GPIO.LOW)
 	time.sleep(0.1)
 
-GPIO.setup(RCpin, GPIO.IN)
-while(GPIO.input(RCpin) == GPIO.LOW):
-	reading += 1
+	GPIO.setup(RCpin, GPIO.IN)
+	while(GPIO.input(RCpin) == GPIO.LOW):
+		reading += 1
 	return reading
 
 while True:
