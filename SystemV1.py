@@ -19,7 +19,7 @@ def RCtime(RCpin):
 GPIO.setup(RCpin, GPIO.IN)
 while(GPIO.input(RCpin) == GPIO.LOW):
 	reading += 1
-	return reading
+return reading
 
 while True:
 
