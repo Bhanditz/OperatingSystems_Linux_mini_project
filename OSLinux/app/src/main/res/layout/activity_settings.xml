@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             app:dsb_min="1"
-            app:dsb_max="25000"
+            app:dsb_max="15000"
             app:dsb_rippleColor="@color/colorDivider"
             app:dsb_trackColor="@color/colorAccent"
             app:dsb_progressColor="@color/colorAccent"
