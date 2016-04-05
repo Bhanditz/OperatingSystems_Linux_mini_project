@@ -1,7 +1,5 @@
 
 import subprocess,time
-p = subprocess.Popen("./kaku 18 C on",shell = True, cwd="/home/pi/wiringPi/examples/lights");
-p.wait()
 
 def KakuSwitch(onoff):
 	if(onoff == True):
@@ -10,6 +8,8 @@ def KakuSwitch(onoff):
 	else:
 		p = subprocess.Popen("./kaku 18 C off",shell= True, cwd="/home/pi/wiringPi/examples/lights");
 		print "Kaku off"
+		
+	p.wait()
 
 while True:
 	KakuSwitch(True)
