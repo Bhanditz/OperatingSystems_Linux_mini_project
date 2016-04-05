@@ -7,6 +7,8 @@ GPIO.setmode(GPIO.BCM)
  # 3.3V, example pin 1
  # Ground, example pin 6
  # GPIO 4, example pin 7
+ # Resistance 
+ # http://www.raspberrypi-spy.co.uk/2012/08/reading-analogue-sensors-with-one-gpio-pin/
 
 def RCtime(RCpin):
 	reading = 0;
