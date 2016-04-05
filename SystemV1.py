@@ -23,14 +23,21 @@ def RCtime(RCpin):
 		reading += 1
 	return reading
 
+onoff = False
+
 while True:
+	global onoff
 
 	value = RCtime(4)#pin invullen
 	print value
 	
 	if(value > 100):
-		KakuSwitch(True)
+		if(onoff != True):
+			KakuSwitch(True)
+		onoff = True
 	else:	
-		KakuSwitch(False)
+		if(onoff != False):
+			KakuSwitch(False)
+		onoff = False
 	
 	time.sleep(1)
