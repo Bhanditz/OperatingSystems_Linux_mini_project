@@ -28,7 +28,7 @@ while True:
 	
 	if(value > 100):
 		KakuSwitch(True)
-	else	
+	else:	
 		KakuSwitch(False)
 	
 	time.sleep(1)
