@@ -11,10 +11,10 @@ def KakuSwitch(onoff):
 	p.wait()
 	
 def RCtime(RCpin):
-reading = 0;
-GPIO.setup(RCpin, GPIO.OUT)
-GPIO.output(RCpin,GPIO.LOW)
-time.sleep(0.1)
+	reading = 0;
+	GPIO.setup(RCpin, GPIO.OUT)
+	GPIO.output(RCpin,GPIO.LOW)
+	time.sleep(0.1)
 
 GPIO.setup(RCpin, GPIO.IN)
 while(GPIO.input(RCpin) == GPIO.LOW):
