@@ -1,55 +1,29 @@
 var express = require('express');
 var app = express();
 var fs = require("fs");
-var gpio = require("gpio");
-var exec = require('child_process').exec;
+var execKC = require('child_process').exec;
 
-// var ldrPin = 4;
-
-// var gpioLdr = gpio.export(ldrPin,{
-	// direction: 'out',
-	// interval: 1000,
-	// ready: function()
-	// {
-		// var measurement = 0;
-		// gpioLdr.setDirection("out");
-		// gpioLdr.set(0);
-		// setTimeout(function(){
-			// console.log("ik zit in de timeout van de ready function");
-		// },100);
-		
-		// gpioLdr.setDirection("in");
-		
-		// var running = true;
-		// while(gpioLdr.value == 0)
-		// {
-			// measurement+=1;
-		// }
-		
-		// console.log("Measurement: "+measurement);
-	// }
-// });
-var options = {cwd:"/home/pi/wiringPi/examples/lights",shell: "true"}
+var optionsKC = {cwd:"/home/pi/wiringPi/examples/lights",shell: "true"}
 
 var errorMessage = {"Error":{"Message":"ID is not known"}};
 var errorMessage1 = {"Error":{"Message":"status is not a true of false"}};
 
-function kakuCommand(command)
+function kakuCommand(kakuStatus,kakuLetter,kakuNumber)
 {
-	var correctStatus = command == "true" || command == "false";
+	var correctStatus = kakuStatus == "true" || kakuStatus == "false";
 	if(correctStatus)
 	{
-		var command;
-		if(command == "true")
+		var command = "./kaku "+kakuNumber+" "+kakuLetter + " ";
+		if(kakuStatus == "true")
 		{
-			command = "./kaku 18 C on"
+			command = command + "on"
 		}
-		else if(command == "false")
+		else if(kakuStatus == "false")
 		{
-			command = "./kaku 18 C off"
+			command = command + "off"
 		}
 		console.log(command);
-		exec(command,options,function(err,stdout,stderr)
+		execKC(command,optionsKC,function(err,stdout,stderr)
 		{
 			if(err)
 			{
@@ -58,6 +32,53 @@ function kakuCommand(command)
 		});
 	}
 }
+
+app.get('/removeKaku/:id',function(req,res)
+{
+	var id = req.params.id;
+	
+	fs.readFile(__dirname+"/"+"kakuData.json",'utf8',function(err,data)
+	{
+		if(err)console.log(err);
+		
+		data = JSON.parse(data);
+		
+		if(!isNaN(id))
+		{
+			var found = false;
+			var index = -1;
+			
+			for(index =0; index<data["kakus"].length; index++)
+		    {
+			   if(data["kakus"][index]["id"] == id)
+			   {
+				   found = true;
+				   break;
+			   }
+		    }
+			
+			if(found)
+			{
+				console.log("removing: "+data["kakus"][index]["id"])
+				data["kakus"].splice(index,1);
+				data = JSON.stringify(data);
+				fs.writeFile(__dirname + "/" + "kakuData.json", data, function(err){
+				   if(err)
+				   {
+						console.log(err); 
+				   }		   
+				});
+				console.log(data);
+			}
+			else
+			{
+				data = JSON.stringify(data);
+			}
+		}
+		else{data = JSON.stringify(data);}
+		res.end(data);
+	});
+})
 
 app.get('/addKaku/:id/:id_letter/:id_number/:location', function (req, res) {
 	
@@ -146,9 +167,8 @@ app.get('/updateKaku/:id/:newLetter/:newNumber/:newStatus/:newLocation',function
 			console.log("update kaku: "+id);
 			data["kakus"][index]["idletter"] = newL;
 			data["kakus"][index]["idnumber"] = newN;
-			data["kakus"][index]["status"] = newS;	
-				
-			kakuCommand(newS);
+			data["kakus"][index]["status"] = newS;			
+			kakuCommand(newS,newL,newN);			
 			data["kakus"][index]["location"] = newLoc;
 			console.log("upated kaku: "+id)
 			
@@ -171,10 +191,9 @@ app.get('/updateKaku/:id/:newLetter/:newNumber/:newStatus/:newLocation',function
 				data = errorMessage1
 			}	
 			data = JSON.stringify(data);			
-		}
-		
+		}		
 		console.log(data);		
-		res.end(data);
+		res.end(data);	
 	});
 })	
 
@@ -184,6 +203,42 @@ app.get('/getKakus', function (req, res) {
        res.end( data );
    });
 })
+
+app.get('/lux/get', function (req, res) {
+   fs.readFile( __dirname + "/" + "serverData.json", 'utf8', function (err, data) {
+	   data = JSON.parse(data);
+       console.log( data );	   
+	   data = JSON.stringify(data["ServerData"][0]);
+       res.end( data );
+   });
+})
+
+app.get('/lux/update/:value',function(req,res)
+{
+	var newValue = req.params.value;
+	fs.readFile( __dirname + "/" + "serverData.json", 'utf8', function (err, data) {
+	   data = JSON.parse(data);
+	   
+	   if(!isNaN(newValue))
+	   {		   
+			data["ServerData"][0]["Luxvalue"] = newValue;
+			console.log("upated server data: "+0)
+			
+			data = JSON.stringify(data);
+			fs.writeFile(__dirname + "/" + "serverData.json", data, function(err){
+			   if(err)
+			   {
+					console.log(err); 
+			   }		   
+		   });
+	   }
+	   else{ data = JSON.stringify(data);}	   
+	   
+	   console.log( data );
+       res.end( data );
+   });
+})
+
 
 app.get('/getKaku/:id', function (req, res) 
 {
@@ -215,6 +270,9 @@ app.get('/getKaku/:id', function (req, res)
 		res.end(data);
 	})
 })
+
+
+
 
 var server = app.listen(8081, function () {
 
