@@ -3,14 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:id="@+id/splashscreen_layout"
     tools:context="com.jannick.oslinux.activities.SplashScreenActivity">
 
     <ImageView
-        android:padding="48dp"
+        android:id="@+id/splashscreen_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/illuminati"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/splashscreen_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon"
+        android:textAlignment="center"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="24dp"
+        android:text="Trees don't grow straight,\nthey grow however makes them happy.\n-Bob Ross"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>

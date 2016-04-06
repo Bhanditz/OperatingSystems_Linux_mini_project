@@ -66,11 +66,12 @@
             android:src="@drawable/ic_wb_sunny_24dp"
             android:layout_gravity="center_vertical"/>
         <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+            android:id="@+id/luxInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            app:dsb_min="1"
-            app:dsb_max="15000"
+            app:dsb_min="0"
+            app:dsb_max="25000"
             app:dsb_rippleColor="@color/colorDivider"
             app:dsb_trackColor="@color/colorAccent"
             app:dsb_progressColor="@color/colorAccent"
