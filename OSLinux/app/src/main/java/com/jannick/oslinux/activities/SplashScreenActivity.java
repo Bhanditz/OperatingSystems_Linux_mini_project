@@ -46,10 +46,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         ImageView mBlurredImage = (ImageView)findViewById(R.id.splashscreen_blur);
 
         Picasso.with(this)
-                .load(R.drawable.illuminati)
-                .transform(new BlurTransformation(50))
-                .transform(new BrightnessFilterTransformation(this))
-                .transform(new ColorFilterTransformation(R.color.colorPrimary))
+                .load(R.drawable.illuminati_ii)
+                .transform(new BlurTransformation(15))
                 .into(mBlurredImage);
 
         TextView textView = (TextView)findViewById(R.id.splashscreen_text);
